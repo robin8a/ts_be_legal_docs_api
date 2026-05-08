@@ -14,6 +14,21 @@
     "categories": {
       "api": {
         "tsbelegaldocsapi": {}
+      },
+      "auth": {
+        "tsbelegaldocsapia927c727": {
+          "userPoolId": "us-east-1_chqNtZEAP",
+          "userPoolName": "tsbeoraculoapi7e5484f0_userpool_7e5484f0-dev",
+          "webClientId": "5gu39h1sr0hbcsj4krd9sti5cn",
+          "nativeClientId": "6u3umismpiv1rb5j5peq9v8j7u",
+          "identityPoolId": "us-east-1:07a6df03-fc6e-4f45-b979-b84f17b27fc6",
+          "identityPoolName": "tsbeoraculoapi7e5484f0_identitypool_7e5484f0__dev",
+          "allowUnauthenticatedIdentities": true,
+          "authRoleArn": "arn:aws:iam::879381245127:role/amplify-tsbeoraculoapi-dev-755cb-authRole",
+          "authRoleName": "amplify-tsbeoraculoapi-dev-755cb-authRole",
+          "unauthRoleArn": "arn:aws:iam::879381245127:role/amplify-tsbeoraculoapi-dev-755cb-unauthRole",
+          "unauthRoleName": "amplify-tsbeoraculoapi-dev-755cb-unauthRole"
+        }
       }
     }
   }
