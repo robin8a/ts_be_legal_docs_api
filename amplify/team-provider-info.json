@@ -10,6 +10,11 @@
       "StackName": "amplify-tsbelegaldocsapi-dev-6ee97",
       "StackId": "arn:aws:cloudformation:us-east-1:879381245127:stack/amplify-tsbelegaldocsapi-dev-6ee97/3a896490-4b22-11f1-a2af-1e2f40805769",
       "AmplifyAppId": "d1h0lpobqmskz4"
+    },
+    "categories": {
+      "api": {
+        "tsbelegaldocsapi": {}
+      }
     }
   }
 }
