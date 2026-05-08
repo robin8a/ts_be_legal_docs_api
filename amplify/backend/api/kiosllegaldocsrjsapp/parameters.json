@@ -1,0 +1,12 @@
+{
+  "AppSyncApiName": "kiosllegaldocsrjsapp",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authkiosllegaldocsrjsappf60b3295",
+      "Outputs.UserPoolId"
+    ]
+  },
+  "AuthModeLastUpdated": "2024-11-08T15:18:25.286Z"
+}
