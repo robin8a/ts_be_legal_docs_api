@@ -12,7 +12,7 @@ export const getLegalApp = /* GraphQL */ `query GetLegalApp($id: ID!) {
   getLegalApp(id: $id) {
     id
     name
-    users {
+    userLegalApps {
       nextToken
       __typename
     }
@@ -50,20 +50,12 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
   getUser(id: $id) {
     id
     name
-    legalApp {
-      id
-      name
-      createdAt
-      updatedAt
-      __typename
-    }
-    legalDocRecords {
+    userLegalApps {
       nextToken
       __typename
     }
     createdAt
     updatedAt
-    legalAppUsersId
     __typename
   }
 }
@@ -79,7 +71,6 @@ export const listUsers = /* GraphQL */ `query ListUsers(
       name
       createdAt
       updatedAt
-      legalAppUsersId
       __typename
     }
     nextToken
@@ -87,16 +78,70 @@ export const listUsers = /* GraphQL */ `query ListUsers(
   }
 }
 ` as GeneratedQuery<APITypes.ListUsersQueryVariables, APITypes.ListUsersQuery>;
+export const getUserLegalApp = /* GraphQL */ `query GetUserLegalApp($id: ID!) {
+  getUserLegalApp(id: $id) {
+    id
+    user {
+      id
+      name
+      createdAt
+      updatedAt
+      __typename
+    }
+    legalApp {
+      id
+      name
+      createdAt
+      updatedAt
+      __typename
+    }
+    legalDocRecords {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    legalAppUserLegalAppsId
+    userUserLegalAppsId
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetUserLegalAppQueryVariables,
+  APITypes.GetUserLegalAppQuery
+>;
+export const listUserLegalApps = /* GraphQL */ `query ListUserLegalApps(
+  $filter: ModelUserLegalAppFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUserLegalApps(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      createdAt
+      updatedAt
+      legalAppUserLegalAppsId
+      userUserLegalAppsId
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListUserLegalAppsQueryVariables,
+  APITypes.ListUserLegalAppsQuery
+>;
 export const getLegalDocType = /* GraphQL */ `query GetLegalDocType($id: ID!) {
   getLegalDocType(id: $id) {
     id
     name
     shortName
+    description
     legalDocs {
       nextToken
       __typename
     }
-    description
     createdAt
     updatedAt
     __typename
@@ -134,11 +179,13 @@ export const getLegalDoc = /* GraphQL */ `query GetLegalDoc($id: ID!) {
     id
     version
     isActive
+    is_latest
     url
     legalDocParentID {
       id
       version
       isActive
+      is_latest
       url
       createdAt
       updatedAt
@@ -184,6 +231,7 @@ export const listLegalDocs = /* GraphQL */ `query ListLegalDocs(
       id
       version
       isActive
+      is_latest
       url
       createdAt
       updatedAt
@@ -204,18 +252,19 @@ export const getLegalDocRecord = /* GraphQL */ `query GetLegalDocRecord($id: ID!
     id
     sign
     legalSignDate
-    user {
+    userLegalApp {
       id
-      name
       createdAt
       updatedAt
-      legalAppUsersId
+      legalAppUserLegalAppsId
+      userUserLegalAppsId
       __typename
     }
     legalDoc {
       id
       version
       isActive
+      is_latest
       url
       createdAt
       updatedAt
@@ -225,7 +274,7 @@ export const getLegalDocRecord = /* GraphQL */ `query GetLegalDocRecord($id: ID!
     }
     createdAt
     updatedAt
-    userLegalDocRecordsId
+    userLegalAppLegalDocRecordsId
     legalDocLegalDocRecordsId
     __typename
   }
@@ -246,7 +295,7 @@ export const listLegalDocRecords = /* GraphQL */ `query ListLegalDocRecords(
       legalSignDate
       createdAt
       updatedAt
-      userLegalDocRecordsId
+      userLegalAppLegalDocRecordsId
       legalDocLegalDocRecordsId
       __typename
     }
@@ -257,45 +306,4 @@ export const listLegalDocRecords = /* GraphQL */ `query ListLegalDocRecords(
 ` as GeneratedQuery<
   APITypes.ListLegalDocRecordsQueryVariables,
   APITypes.ListLegalDocRecordsQuery
->;
-export const getOrder = /* GraphQL */ `query GetOrder($id: ID!) {
-  getOrder(id: $id) {
-    id
-    customerID
-    accountRepresentativeID
-    productID
-    status
-    amount
-    date
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.GetOrderQueryVariables, APITypes.GetOrderQuery>;
-export const listOrders = /* GraphQL */ `query ListOrders(
-  $filter: ModelOrderFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listOrders(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      customerID
-      accountRepresentativeID
-      productID
-      status
-      amount
-      date
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.ListOrdersQueryVariables,
-  APITypes.ListOrdersQuery
 >;

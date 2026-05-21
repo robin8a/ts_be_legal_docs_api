@@ -6,7 +6,7 @@ export const onCreateLegalApp = /* GraphQL */ `
     onCreateLegalApp(filter: $filter) {
       id
       name
-      users {
+      userLegalApps {
         nextToken
         __typename
       }
@@ -21,7 +21,7 @@ export const onUpdateLegalApp = /* GraphQL */ `
     onUpdateLegalApp(filter: $filter) {
       id
       name
-      users {
+      userLegalApps {
         nextToken
         __typename
       }
@@ -36,7 +36,7 @@ export const onDeleteLegalApp = /* GraphQL */ `
     onDeleteLegalApp(filter: $filter) {
       id
       name
-      users {
+      userLegalApps {
         nextToken
         __typename
       }
@@ -51,20 +51,12 @@ export const onCreateUser = /* GraphQL */ `
     onCreateUser(filter: $filter) {
       id
       name
-      legalApp {
-        id
-        name
-        createdAt
-        updatedAt
-        __typename
-      }
-      legalDocRecords {
+      userLegalApps {
         nextToken
         __typename
       }
       createdAt
       updatedAt
-      legalAppUsersId
       __typename
     }
   }
@@ -74,20 +66,12 @@ export const onUpdateUser = /* GraphQL */ `
     onUpdateUser(filter: $filter) {
       id
       name
-      legalApp {
-        id
-        name
-        createdAt
-        updatedAt
-        __typename
-      }
-      legalDocRecords {
+      userLegalApps {
         nextToken
         __typename
       }
       createdAt
       updatedAt
-      legalAppUsersId
       __typename
     }
   }
@@ -97,6 +81,29 @@ export const onDeleteUser = /* GraphQL */ `
     onDeleteUser(filter: $filter) {
       id
       name
+      userLegalApps {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onCreateUserLegalApp = /* GraphQL */ `
+  subscription OnCreateUserLegalApp(
+    $filter: ModelSubscriptionUserLegalAppFilterInput
+  ) {
+    onCreateUserLegalApp(filter: $filter) {
+      id
+      user {
+        id
+        name
+        createdAt
+        updatedAt
+        __typename
+      }
       legalApp {
         id
         name
@@ -110,7 +117,72 @@ export const onDeleteUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      legalAppUsersId
+      legalAppUserLegalAppsId
+      userUserLegalAppsId
+      __typename
+    }
+  }
+`;
+export const onUpdateUserLegalApp = /* GraphQL */ `
+  subscription OnUpdateUserLegalApp(
+    $filter: ModelSubscriptionUserLegalAppFilterInput
+  ) {
+    onUpdateUserLegalApp(filter: $filter) {
+      id
+      user {
+        id
+        name
+        createdAt
+        updatedAt
+        __typename
+      }
+      legalApp {
+        id
+        name
+        createdAt
+        updatedAt
+        __typename
+      }
+      legalDocRecords {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      legalAppUserLegalAppsId
+      userUserLegalAppsId
+      __typename
+    }
+  }
+`;
+export const onDeleteUserLegalApp = /* GraphQL */ `
+  subscription OnDeleteUserLegalApp(
+    $filter: ModelSubscriptionUserLegalAppFilterInput
+  ) {
+    onDeleteUserLegalApp(filter: $filter) {
+      id
+      user {
+        id
+        name
+        createdAt
+        updatedAt
+        __typename
+      }
+      legalApp {
+        id
+        name
+        createdAt
+        updatedAt
+        __typename
+      }
+      legalDocRecords {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      legalAppUserLegalAppsId
+      userUserLegalAppsId
       __typename
     }
   }
@@ -123,11 +195,11 @@ export const onCreateLegalDocType = /* GraphQL */ `
       id
       name
       shortName
+      description
       legalDocs {
         nextToken
         __typename
       }
-      description
       createdAt
       updatedAt
       __typename
@@ -142,11 +214,11 @@ export const onUpdateLegalDocType = /* GraphQL */ `
       id
       name
       shortName
+      description
       legalDocs {
         nextToken
         __typename
       }
-      description
       createdAt
       updatedAt
       __typename
@@ -161,11 +233,11 @@ export const onDeleteLegalDocType = /* GraphQL */ `
       id
       name
       shortName
+      description
       legalDocs {
         nextToken
         __typename
       }
-      description
       createdAt
       updatedAt
       __typename
@@ -178,11 +250,13 @@ export const onCreateLegalDoc = /* GraphQL */ `
       id
       version
       isActive
+      is_latest
       url
       legalDocParentID {
         id
         version
         isActive
+        is_latest
         url
         createdAt
         updatedAt
@@ -221,11 +295,13 @@ export const onUpdateLegalDoc = /* GraphQL */ `
       id
       version
       isActive
+      is_latest
       url
       legalDocParentID {
         id
         version
         isActive
+        is_latest
         url
         createdAt
         updatedAt
@@ -264,11 +340,13 @@ export const onDeleteLegalDoc = /* GraphQL */ `
       id
       version
       isActive
+      is_latest
       url
       legalDocParentID {
         id
         version
         isActive
+        is_latest
         url
         createdAt
         updatedAt
@@ -309,18 +387,19 @@ export const onCreateLegalDocRecord = /* GraphQL */ `
       id
       sign
       legalSignDate
-      user {
+      userLegalApp {
         id
-        name
         createdAt
         updatedAt
-        legalAppUsersId
+        legalAppUserLegalAppsId
+        userUserLegalAppsId
         __typename
       }
       legalDoc {
         id
         version
         isActive
+        is_latest
         url
         createdAt
         updatedAt
@@ -330,7 +409,7 @@ export const onCreateLegalDocRecord = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      userLegalDocRecordsId
+      userLegalAppLegalDocRecordsId
       legalDocLegalDocRecordsId
       __typename
     }
@@ -344,18 +423,19 @@ export const onUpdateLegalDocRecord = /* GraphQL */ `
       id
       sign
       legalSignDate
-      user {
+      userLegalApp {
         id
-        name
         createdAt
         updatedAt
-        legalAppUsersId
+        legalAppUserLegalAppsId
+        userUserLegalAppsId
         __typename
       }
       legalDoc {
         id
         version
         isActive
+        is_latest
         url
         createdAt
         updatedAt
@@ -365,7 +445,7 @@ export const onUpdateLegalDocRecord = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      userLegalDocRecordsId
+      userLegalAppLegalDocRecordsId
       legalDocLegalDocRecordsId
       __typename
     }
@@ -379,18 +459,19 @@ export const onDeleteLegalDocRecord = /* GraphQL */ `
       id
       sign
       legalSignDate
-      user {
+      userLegalApp {
         id
-        name
         createdAt
         updatedAt
-        legalAppUsersId
+        legalAppUserLegalAppsId
+        userUserLegalAppsId
         __typename
       }
       legalDoc {
         id
         version
         isActive
+        is_latest
         url
         createdAt
         updatedAt
@@ -400,56 +481,8 @@ export const onDeleteLegalDocRecord = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      userLegalDocRecordsId
+      userLegalAppLegalDocRecordsId
       legalDocLegalDocRecordsId
-      __typename
-    }
-  }
-`;
-export const onCreateOrder = /* GraphQL */ `
-  subscription OnCreateOrder($filter: ModelSubscriptionOrderFilterInput) {
-    onCreateOrder(filter: $filter) {
-      id
-      customerID
-      accountRepresentativeID
-      productID
-      status
-      amount
-      date
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onUpdateOrder = /* GraphQL */ `
-  subscription OnUpdateOrder($filter: ModelSubscriptionOrderFilterInput) {
-    onUpdateOrder(filter: $filter) {
-      id
-      customerID
-      accountRepresentativeID
-      productID
-      status
-      amount
-      date
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onDeleteOrder = /* GraphQL */ `
-  subscription OnDeleteOrder($filter: ModelSubscriptionOrderFilterInput) {
-    onDeleteOrder(filter: $filter) {
-      id
-      customerID
-      accountRepresentativeID
-      productID
-      status
-      amount
-      date
-      createdAt
-      updatedAt
       __typename
     }
   }

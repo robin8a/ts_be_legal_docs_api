@@ -9,7 +9,7 @@ export const createLegalApp = /* GraphQL */ `
     createLegalApp(input: $input, condition: $condition) {
       id
       name
-      users {
+      userLegalApps {
         nextToken
         __typename
       }
@@ -27,7 +27,7 @@ export const updateLegalApp = /* GraphQL */ `
     updateLegalApp(input: $input, condition: $condition) {
       id
       name
-      users {
+      userLegalApps {
         nextToken
         __typename
       }
@@ -45,7 +45,7 @@ export const deleteLegalApp = /* GraphQL */ `
     deleteLegalApp(input: $input, condition: $condition) {
       id
       name
-      users {
+      userLegalApps {
         nextToken
         __typename
       }
@@ -63,20 +63,12 @@ export const createUser = /* GraphQL */ `
     createUser(input: $input, condition: $condition) {
       id
       name
-      legalApp {
-        id
-        name
-        createdAt
-        updatedAt
-        __typename
-      }
-      legalDocRecords {
+      userLegalApps {
         nextToken
         __typename
       }
       createdAt
       updatedAt
-      legalAppUsersId
       __typename
     }
   }
@@ -89,20 +81,12 @@ export const updateUser = /* GraphQL */ `
     updateUser(input: $input, condition: $condition) {
       id
       name
-      legalApp {
-        id
-        name
-        createdAt
-        updatedAt
-        __typename
-      }
-      legalDocRecords {
+      userLegalApps {
         nextToken
         __typename
       }
       createdAt
       updatedAt
-      legalAppUsersId
       __typename
     }
   }
@@ -115,6 +99,30 @@ export const deleteUser = /* GraphQL */ `
     deleteUser(input: $input, condition: $condition) {
       id
       name
+      userLegalApps {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const createUserLegalApp = /* GraphQL */ `
+  mutation CreateUserLegalApp(
+    $input: CreateUserLegalAppInput!
+    $condition: ModelUserLegalAppConditionInput
+  ) {
+    createUserLegalApp(input: $input, condition: $condition) {
+      id
+      user {
+        id
+        name
+        createdAt
+        updatedAt
+        __typename
+      }
       legalApp {
         id
         name
@@ -128,7 +136,74 @@ export const deleteUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      legalAppUsersId
+      legalAppUserLegalAppsId
+      userUserLegalAppsId
+      __typename
+    }
+  }
+`;
+export const updateUserLegalApp = /* GraphQL */ `
+  mutation UpdateUserLegalApp(
+    $input: UpdateUserLegalAppInput!
+    $condition: ModelUserLegalAppConditionInput
+  ) {
+    updateUserLegalApp(input: $input, condition: $condition) {
+      id
+      user {
+        id
+        name
+        createdAt
+        updatedAt
+        __typename
+      }
+      legalApp {
+        id
+        name
+        createdAt
+        updatedAt
+        __typename
+      }
+      legalDocRecords {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      legalAppUserLegalAppsId
+      userUserLegalAppsId
+      __typename
+    }
+  }
+`;
+export const deleteUserLegalApp = /* GraphQL */ `
+  mutation DeleteUserLegalApp(
+    $input: DeleteUserLegalAppInput!
+    $condition: ModelUserLegalAppConditionInput
+  ) {
+    deleteUserLegalApp(input: $input, condition: $condition) {
+      id
+      user {
+        id
+        name
+        createdAt
+        updatedAt
+        __typename
+      }
+      legalApp {
+        id
+        name
+        createdAt
+        updatedAt
+        __typename
+      }
+      legalDocRecords {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      legalAppUserLegalAppsId
+      userUserLegalAppsId
       __typename
     }
   }
@@ -142,11 +217,11 @@ export const createLegalDocType = /* GraphQL */ `
       id
       name
       shortName
+      description
       legalDocs {
         nextToken
         __typename
       }
-      description
       createdAt
       updatedAt
       __typename
@@ -162,11 +237,11 @@ export const updateLegalDocType = /* GraphQL */ `
       id
       name
       shortName
+      description
       legalDocs {
         nextToken
         __typename
       }
-      description
       createdAt
       updatedAt
       __typename
@@ -182,11 +257,11 @@ export const deleteLegalDocType = /* GraphQL */ `
       id
       name
       shortName
+      description
       legalDocs {
         nextToken
         __typename
       }
-      description
       createdAt
       updatedAt
       __typename
@@ -202,11 +277,13 @@ export const createLegalDoc = /* GraphQL */ `
       id
       version
       isActive
+      is_latest
       url
       legalDocParentID {
         id
         version
         isActive
+        is_latest
         url
         createdAt
         updatedAt
@@ -248,11 +325,13 @@ export const updateLegalDoc = /* GraphQL */ `
       id
       version
       isActive
+      is_latest
       url
       legalDocParentID {
         id
         version
         isActive
+        is_latest
         url
         createdAt
         updatedAt
@@ -294,11 +373,13 @@ export const deleteLegalDoc = /* GraphQL */ `
       id
       version
       isActive
+      is_latest
       url
       legalDocParentID {
         id
         version
         isActive
+        is_latest
         url
         createdAt
         updatedAt
@@ -340,18 +421,19 @@ export const createLegalDocRecord = /* GraphQL */ `
       id
       sign
       legalSignDate
-      user {
+      userLegalApp {
         id
-        name
         createdAt
         updatedAt
-        legalAppUsersId
+        legalAppUserLegalAppsId
+        userUserLegalAppsId
         __typename
       }
       legalDoc {
         id
         version
         isActive
+        is_latest
         url
         createdAt
         updatedAt
@@ -361,7 +443,7 @@ export const createLegalDocRecord = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      userLegalDocRecordsId
+      userLegalAppLegalDocRecordsId
       legalDocLegalDocRecordsId
       __typename
     }
@@ -376,18 +458,19 @@ export const updateLegalDocRecord = /* GraphQL */ `
       id
       sign
       legalSignDate
-      user {
+      userLegalApp {
         id
-        name
         createdAt
         updatedAt
-        legalAppUsersId
+        legalAppUserLegalAppsId
+        userUserLegalAppsId
         __typename
       }
       legalDoc {
         id
         version
         isActive
+        is_latest
         url
         createdAt
         updatedAt
@@ -397,7 +480,7 @@ export const updateLegalDocRecord = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      userLegalDocRecordsId
+      userLegalAppLegalDocRecordsId
       legalDocLegalDocRecordsId
       __typename
     }
@@ -412,18 +495,19 @@ export const deleteLegalDocRecord = /* GraphQL */ `
       id
       sign
       legalSignDate
-      user {
+      userLegalApp {
         id
-        name
         createdAt
         updatedAt
-        legalAppUsersId
+        legalAppUserLegalAppsId
+        userUserLegalAppsId
         __typename
       }
       legalDoc {
         id
         version
         isActive
+        is_latest
         url
         createdAt
         updatedAt
@@ -433,65 +517,8 @@ export const deleteLegalDocRecord = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      userLegalDocRecordsId
+      userLegalAppLegalDocRecordsId
       legalDocLegalDocRecordsId
-      __typename
-    }
-  }
-`;
-export const createOrder = /* GraphQL */ `
-  mutation CreateOrder(
-    $input: CreateOrderInput!
-    $condition: ModelOrderConditionInput
-  ) {
-    createOrder(input: $input, condition: $condition) {
-      id
-      customerID
-      accountRepresentativeID
-      productID
-      status
-      amount
-      date
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const updateOrder = /* GraphQL */ `
-  mutation UpdateOrder(
-    $input: UpdateOrderInput!
-    $condition: ModelOrderConditionInput
-  ) {
-    updateOrder(input: $input, condition: $condition) {
-      id
-      customerID
-      accountRepresentativeID
-      productID
-      status
-      amount
-      date
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const deleteOrder = /* GraphQL */ `
-  mutation DeleteOrder(
-    $input: DeleteOrderInput!
-    $condition: ModelOrderConditionInput
-  ) {
-    deleteOrder(input: $input, condition: $condition) {
-      id
-      customerID
-      accountRepresentativeID
-      productID
-      status
-      amount
-      date
-      createdAt
-      updatedAt
       __typename
     }
   }

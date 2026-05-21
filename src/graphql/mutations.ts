@@ -15,7 +15,7 @@ export const createLegalApp = /* GraphQL */ `mutation CreateLegalApp(
   createLegalApp(input: $input, condition: $condition) {
     id
     name
-    users {
+    userLegalApps {
       nextToken
       __typename
     }
@@ -35,7 +35,7 @@ export const updateLegalApp = /* GraphQL */ `mutation UpdateLegalApp(
   updateLegalApp(input: $input, condition: $condition) {
     id
     name
-    users {
+    userLegalApps {
       nextToken
       __typename
     }
@@ -55,7 +55,7 @@ export const deleteLegalApp = /* GraphQL */ `mutation DeleteLegalApp(
   deleteLegalApp(input: $input, condition: $condition) {
     id
     name
-    users {
+    userLegalApps {
       nextToken
       __typename
     }
@@ -75,20 +75,12 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
   createUser(input: $input, condition: $condition) {
     id
     name
-    legalApp {
-      id
-      name
-      createdAt
-      updatedAt
-      __typename
-    }
-    legalDocRecords {
+    userLegalApps {
       nextToken
       __typename
     }
     createdAt
     updatedAt
-    legalAppUsersId
     __typename
   }
 }
@@ -103,20 +95,12 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
   updateUser(input: $input, condition: $condition) {
     id
     name
-    legalApp {
-      id
-      name
-      createdAt
-      updatedAt
-      __typename
-    }
-    legalDocRecords {
+    userLegalApps {
       nextToken
       __typename
     }
     createdAt
     updatedAt
-    legalAppUsersId
     __typename
   }
 }
@@ -131,6 +115,32 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
   deleteUser(input: $input, condition: $condition) {
     id
     name
+    userLegalApps {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteUserMutationVariables,
+  APITypes.DeleteUserMutation
+>;
+export const createUserLegalApp = /* GraphQL */ `mutation CreateUserLegalApp(
+  $input: CreateUserLegalAppInput!
+  $condition: ModelUserLegalAppConditionInput
+) {
+  createUserLegalApp(input: $input, condition: $condition) {
+    id
+    user {
+      id
+      name
+      createdAt
+      updatedAt
+      __typename
+    }
     legalApp {
       id
       name
@@ -144,13 +154,84 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
     }
     createdAt
     updatedAt
-    legalAppUsersId
+    legalAppUserLegalAppsId
+    userUserLegalAppsId
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.DeleteUserMutationVariables,
-  APITypes.DeleteUserMutation
+  APITypes.CreateUserLegalAppMutationVariables,
+  APITypes.CreateUserLegalAppMutation
+>;
+export const updateUserLegalApp = /* GraphQL */ `mutation UpdateUserLegalApp(
+  $input: UpdateUserLegalAppInput!
+  $condition: ModelUserLegalAppConditionInput
+) {
+  updateUserLegalApp(input: $input, condition: $condition) {
+    id
+    user {
+      id
+      name
+      createdAt
+      updatedAt
+      __typename
+    }
+    legalApp {
+      id
+      name
+      createdAt
+      updatedAt
+      __typename
+    }
+    legalDocRecords {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    legalAppUserLegalAppsId
+    userUserLegalAppsId
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateUserLegalAppMutationVariables,
+  APITypes.UpdateUserLegalAppMutation
+>;
+export const deleteUserLegalApp = /* GraphQL */ `mutation DeleteUserLegalApp(
+  $input: DeleteUserLegalAppInput!
+  $condition: ModelUserLegalAppConditionInput
+) {
+  deleteUserLegalApp(input: $input, condition: $condition) {
+    id
+    user {
+      id
+      name
+      createdAt
+      updatedAt
+      __typename
+    }
+    legalApp {
+      id
+      name
+      createdAt
+      updatedAt
+      __typename
+    }
+    legalDocRecords {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    legalAppUserLegalAppsId
+    userUserLegalAppsId
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteUserLegalAppMutationVariables,
+  APITypes.DeleteUserLegalAppMutation
 >;
 export const createLegalDocType = /* GraphQL */ `mutation CreateLegalDocType(
   $input: CreateLegalDocTypeInput!
@@ -160,11 +241,11 @@ export const createLegalDocType = /* GraphQL */ `mutation CreateLegalDocType(
     id
     name
     shortName
+    description
     legalDocs {
       nextToken
       __typename
     }
-    description
     createdAt
     updatedAt
     __typename
@@ -182,11 +263,11 @@ export const updateLegalDocType = /* GraphQL */ `mutation UpdateLegalDocType(
     id
     name
     shortName
+    description
     legalDocs {
       nextToken
       __typename
     }
-    description
     createdAt
     updatedAt
     __typename
@@ -204,11 +285,11 @@ export const deleteLegalDocType = /* GraphQL */ `mutation DeleteLegalDocType(
     id
     name
     shortName
+    description
     legalDocs {
       nextToken
       __typename
     }
-    description
     createdAt
     updatedAt
     __typename
@@ -226,11 +307,13 @@ export const createLegalDoc = /* GraphQL */ `mutation CreateLegalDoc(
     id
     version
     isActive
+    is_latest
     url
     legalDocParentID {
       id
       version
       isActive
+      is_latest
       url
       createdAt
       updatedAt
@@ -274,11 +357,13 @@ export const updateLegalDoc = /* GraphQL */ `mutation UpdateLegalDoc(
     id
     version
     isActive
+    is_latest
     url
     legalDocParentID {
       id
       version
       isActive
+      is_latest
       url
       createdAt
       updatedAt
@@ -322,11 +407,13 @@ export const deleteLegalDoc = /* GraphQL */ `mutation DeleteLegalDoc(
     id
     version
     isActive
+    is_latest
     url
     legalDocParentID {
       id
       version
       isActive
+      is_latest
       url
       createdAt
       updatedAt
@@ -370,18 +457,19 @@ export const createLegalDocRecord = /* GraphQL */ `mutation CreateLegalDocRecord
     id
     sign
     legalSignDate
-    user {
+    userLegalApp {
       id
-      name
       createdAt
       updatedAt
-      legalAppUsersId
+      legalAppUserLegalAppsId
+      userUserLegalAppsId
       __typename
     }
     legalDoc {
       id
       version
       isActive
+      is_latest
       url
       createdAt
       updatedAt
@@ -391,7 +479,7 @@ export const createLegalDocRecord = /* GraphQL */ `mutation CreateLegalDocRecord
     }
     createdAt
     updatedAt
-    userLegalDocRecordsId
+    userLegalAppLegalDocRecordsId
     legalDocLegalDocRecordsId
     __typename
   }
@@ -408,18 +496,19 @@ export const updateLegalDocRecord = /* GraphQL */ `mutation UpdateLegalDocRecord
     id
     sign
     legalSignDate
-    user {
+    userLegalApp {
       id
-      name
       createdAt
       updatedAt
-      legalAppUsersId
+      legalAppUserLegalAppsId
+      userUserLegalAppsId
       __typename
     }
     legalDoc {
       id
       version
       isActive
+      is_latest
       url
       createdAt
       updatedAt
@@ -429,7 +518,7 @@ export const updateLegalDocRecord = /* GraphQL */ `mutation UpdateLegalDocRecord
     }
     createdAt
     updatedAt
-    userLegalDocRecordsId
+    userLegalAppLegalDocRecordsId
     legalDocLegalDocRecordsId
     __typename
   }
@@ -446,18 +535,19 @@ export const deleteLegalDocRecord = /* GraphQL */ `mutation DeleteLegalDocRecord
     id
     sign
     legalSignDate
-    user {
+    userLegalApp {
       id
-      name
       createdAt
       updatedAt
-      legalAppUsersId
+      legalAppUserLegalAppsId
+      userUserLegalAppsId
       __typename
     }
     legalDoc {
       id
       version
       isActive
+      is_latest
       url
       createdAt
       updatedAt
@@ -467,7 +557,7 @@ export const deleteLegalDocRecord = /* GraphQL */ `mutation DeleteLegalDocRecord
     }
     createdAt
     updatedAt
-    userLegalDocRecordsId
+    userLegalAppLegalDocRecordsId
     legalDocLegalDocRecordsId
     __typename
   }
@@ -475,67 +565,4 @@ export const deleteLegalDocRecord = /* GraphQL */ `mutation DeleteLegalDocRecord
 ` as GeneratedMutation<
   APITypes.DeleteLegalDocRecordMutationVariables,
   APITypes.DeleteLegalDocRecordMutation
->;
-export const createOrder = /* GraphQL */ `mutation CreateOrder(
-  $input: CreateOrderInput!
-  $condition: ModelOrderConditionInput
-) {
-  createOrder(input: $input, condition: $condition) {
-    id
-    customerID
-    accountRepresentativeID
-    productID
-    status
-    amount
-    date
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.CreateOrderMutationVariables,
-  APITypes.CreateOrderMutation
->;
-export const updateOrder = /* GraphQL */ `mutation UpdateOrder(
-  $input: UpdateOrderInput!
-  $condition: ModelOrderConditionInput
-) {
-  updateOrder(input: $input, condition: $condition) {
-    id
-    customerID
-    accountRepresentativeID
-    productID
-    status
-    amount
-    date
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.UpdateOrderMutationVariables,
-  APITypes.UpdateOrderMutation
->;
-export const deleteOrder = /* GraphQL */ `mutation DeleteOrder(
-  $input: DeleteOrderInput!
-  $condition: ModelOrderConditionInput
-) {
-  deleteOrder(input: $input, condition: $condition) {
-    id
-    customerID
-    accountRepresentativeID
-    productID
-    status
-    amount
-    date
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.DeleteOrderMutationVariables,
-  APITypes.DeleteOrderMutation
 >;
